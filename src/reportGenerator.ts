@@ -3,9 +3,10 @@ import { RepositoryCommits } from './gitProvider';
 export class ReportGenerator {
     public static generateMarkdown(repos: RepositoryCommits[]): string {
         const today = new Date();
-        const dateString = today.toLocaleDateString(undefined, {
-            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-        });
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+        const dateString = `${year}-${month}-${day}`;
 
         let markdown = `# Git Activity Report\n**Date:** ${dateString}\n\n`;
 
@@ -19,16 +20,17 @@ export class ReportGenerator {
             
             for (const commit of repo.commits) {
                 const commitDate = commit.authorDate || commit.commitDate || new Date();
-                const timeString = commitDate.toLocaleTimeString(undefined, {
-                    hour: '2-digit', minute: '2-digit'
-                });
+                const hours = String(commitDate.getHours()).padStart(2, '0');
+                const minutes = String(commitDate.getMinutes()).padStart(2, '0');
+                const seconds = String(commitDate.getSeconds()).padStart(2, '0');
+                const timeString = `${hours}:${minutes}:${seconds}`;
                 
                 // First line is the title, the rest is description
                 const messageParts = commit.message.split('\n');
                 const title = messageParts[0];
                 
                 markdown += `### ${title}\n`;
-                markdown += `- **Time:** ${timeString}\n`;
+                markdown += `- **Timestamp:** ${timeString}\n`;
                 markdown += `- **Commit:** \`${commit.hash.substring(0, 7)}\`\n`;
                 
                 if (messageParts.length > 1) {

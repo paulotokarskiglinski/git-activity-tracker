@@ -1,9 +1,13 @@
 import * as vscode from 'vscode';
 import { GitExtension, Repository, Commit } from './git';
 
+export interface ActivityCommit extends Commit {
+    branchName?: string;
+}
+
 export interface RepositoryCommits {
     repositoryName: string;
-    commits: Commit[];
+    commits: ActivityCommit[];
 }
 
 export class GitProvider {
@@ -62,11 +66,25 @@ export class GitProvider {
                     return isAuthor;
                 });
 
-                if (authorCommits.length > 0) {
+                const enhancedCommits: ActivityCommit[] = [];
+                for (const c of authorCommits) {
+                    let branchName = repo.state.HEAD?.name || 'unknown';
+                    try {
+                        const branches = await repo.getBranches({ contains: c.hash });
+                        if (branches.length > 0) {
+                            branchName = branches.find(b => b.name)?.name || branchName;
+                        }
+                    } catch (e) {
+                        // ignore and use fallback
+                    }
+                    enhancedCommits.push({ ...c, branchName });
+                }
+
+                if (enhancedCommits.length > 0) {
                     const repoName = repo.rootUri.path.split('/').pop() || 'Unknown Repository';
                     result.push({
                         repositoryName: repoName,
-                        commits: authorCommits
+                        commits: enhancedCommits
                     });
                 }
             } catch (err) {

@@ -25,21 +25,10 @@ export class ReportGenerator {
                 const seconds = String(commitDate.getSeconds()).padStart(2, '0');
                 const timeString = `${hours}:${minutes}:${seconds}`;
                 
-                // First line is the title, the rest is description
-                const messageParts = commit.message.split('\n');
-                const title = messageParts[0];
-                
-                markdown += `### ${title}\n`;
+                markdown += `- **Branch:** \`${commit.branchName}\`\n`;
                 markdown += `- **Timestamp:** ${timeString}\n`;
                 markdown += `- **Commit:** \`${commit.hash.substring(0, 7)}\`\n`;
-                
-                if (messageParts.length > 1) {
-                    const body = messageParts.slice(1).join('\n').trim();
-                    if (body) {
-                        markdown += `- **Details:**\n  > ${body.replace(/\n/g, '\n  > ')}\n`;
-                    }
-                }
-                markdown += `\n`;
+                markdown += `- **Commit message:**\n  > ${commit.message.replace(/\n/g, '\n  > ')}\n\n`;
             }
         }
 

@@ -31,22 +31,39 @@ export class GitProvider {
 
     public async getDailyCommits(): Promise<RepositoryCommits[]> {
         const api = await this.getApi();
-        const repositories: Repository[] = api.repositories;
+        const watchedDirs = vscode.workspace.getConfiguration('gitActivityTracker').get<string[]>('watchedDirectories') || [];
+        const apiRepositories: Repository[] = [...api.repositories];
+
+        for (const dir of watchedDirs) {
+            try {
+                const uri = vscode.Uri.file(dir);
+                // Check if already tracked to avoid duplicates
+                if (!apiRepositories.some(r => r.rootUri.fsPath.toLowerCase() === uri.fsPath.toLowerCase())) {
+                    const repo = await api.openRepository(uri);
+                    if (repo) {
+                        apiRepositories.push(repo);
+                    }
+                }
+            } catch (err) {
+                console.error(`Failed to open watched directory: ${dir}`, err);
+            }
+        }
+
         const result: RepositoryCommits[] = [];
 
-        if (repositories.length === 0) {
+        if (apiRepositories.length === 0) {
             return result;
         }
 
         // Get global author email to use as fallback
-        const firstRepo = repositories[0];
+        const firstRepo = apiRepositories[0];
         const globalEmail = await firstRepo.getGlobalConfig('user.email');
         const globalName = await firstRepo.getGlobalConfig('user.name');
 
         const today = new Date();
         today.setHours(0, 0, 0, 0);
 
-        for (const repo of repositories) {
+        for (const repo of apiRepositories) {
             try {
                 // Try to get local config first, fallback to global
                 let email = await repo.getConfig('user.email') || globalEmail;

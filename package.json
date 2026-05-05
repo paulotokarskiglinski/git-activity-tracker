@@ -2,7 +2,8 @@
   "name": "git-activity-tracker",
   "displayName": "Git Activity Tracker",
   "description": "Tracks daily git commits across workspace",
-  "version": "0.0.1",
+  "version": "0.0.2",
+  "publisher": "local",
   "engines": {
     "vscode": "^1.118.0"
   },
@@ -17,7 +18,20 @@
         "command": "git-activity-tracker.generateReport",
         "title": "Git Activity: Generate Daily Report"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "Git Activity Tracker",
+      "properties": {
+        "gitActivityTracker.watchedDirectories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "An array of absolute paths to Git repositories that should always be scanned for daily activity, regardless of what is open in the workspace."
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run package",

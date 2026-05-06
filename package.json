@@ -29,6 +29,11 @@
           },
           "default": [],
           "description": "An array of absolute paths to Git repositories that should always be scanned for daily activity, regardless of what is open in the workspace."
+        },
+        "gitActivityTracker.authorName": {
+          "type": "string",
+          "default": "",
+          "description": "Optional: Explicitly set the author name to track. If left empty, it will default to your local or global git config user.name."
         }
       }
     }

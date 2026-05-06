@@ -16,7 +16,7 @@
     "commands": [
       {
         "command": "git-activity-tracker.generateReport",
-        "title": "Git Activity: Generate Daily Report"
+        "title": "Git Activity: Generate Activity Report"
       }
     ],
     "configuration": {

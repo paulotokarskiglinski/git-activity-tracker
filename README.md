@@ -21,7 +21,7 @@ This extension contributes the following settings:
 
 1. Open a workspace with at least one Git repository.
 2. Open the VS Code Command Palette (`Ctrl+Shift+P` or `Cmd+Shift+P`).
-3. Run **`Git Activity: Generate Daily Report`**.
+3. Run **`Git Activity: Generate Activity Report`**.
 
 ---
 *Created as a productivity tool for developers managing multiple codebases.*

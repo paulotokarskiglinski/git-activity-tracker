@@ -25,3 +25,7 @@ This extension contributes the following settings:
 
 ---
 *Created as a productivity tool for developers managing multiple codebases.*
+
+## License
+
+MIT

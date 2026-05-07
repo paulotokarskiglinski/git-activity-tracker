@@ -11,7 +11,19 @@ export class ReportGenerator {
     const customAuthorName = vscode.workspace.getConfiguration('gitActivityTracker').get<string>('authorName');
     const authorName = customAuthorName || repos[0]?.commits[0]?.authorName || 'Unknown Author';
 
-    let markdown = `# Git Activity Report\n\n**Author:** ${authorName}\n**Timeframe:** ${timeframeLabel}\n**Repositories:** ${repos.length}\n\n`;
+    let totalCommits = 0;
+    let totalMerges = 0;
+
+    for (const repo of repos) {
+      totalCommits += repo.commits.length;
+      for (const commit of repo.commits) {
+        if (commit.parents && commit.parents.length > 1) {
+          totalMerges++;
+        }
+      }
+    }
+
+    let markdown = `# Git Activity Report\n\n**Author:** ${authorName}\n**Timeframe:** ${timeframeLabel}\n**Repositories:** ${repos.length}\n**Commits:** ${totalCommits}\n**Merges:** ${totalMerges}\n\n`;
 
     if (repos.length === 0) {
       markdown += `*No commits found for the selected timeframe.*\n`;

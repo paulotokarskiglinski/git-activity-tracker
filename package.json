@@ -1,7 +1,7 @@
 {
   "name": "git-activity-tracker",
   "displayName": "Git Activity Tracker",
-  "description": "Tracks daily git commits across workspace",
+  "description": "Track your Git activity across multiple projects and generate reports.",
   "author": "paulotokarskiglinski",
   "license": "MIT",
   "repository": {
@@ -12,7 +12,7 @@
   "bugs": {
     "url": "https://github.com/paulotokarskiglinski/git-activity-tracker/issues"
   },
-  "version": "0.0.3",
+  "version": "1.0.0",
   "publisher": "local",
   "engines": {
     "vscode": "^1.118.0"
@@ -22,6 +22,7 @@
   ],
   "activationEvents": [],
   "main": "./dist/extension.js",
+  "icon": "images/icon.png",
   "contributes": {
     "commands": [
       {

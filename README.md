@@ -1,6 +1,6 @@
 # Git Activity Tracker
 
-A VS Code extension designed to automatically track your daily Git commits across all active workspace repositories and generate a beautifully formatted Markdown report.
+A VS Code extension designed to automatically track your Git commits across all active workspace repositories and generate a Markdown report.
 
 ## Features
 

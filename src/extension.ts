@@ -44,7 +44,7 @@ export function activate(context: vscode.ExtensionContext) {
         fs.mkdirSync(trackerDir, { recursive: true });
       }
 
-      const reportPath = path.join(trackerDir, 'daily-report.md');
+      const reportPath = path.join(trackerDir, 'git-activity-report.md');
       fs.writeFileSync(reportPath, markdown, 'utf8');
 
       // Open the file in VS Code

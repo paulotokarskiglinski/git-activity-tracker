@@ -8,7 +8,7 @@ A VS Code extension designed to automatically track your daily Git commits acros
 - Define a list of "Watched Directories" in your VS Code Settings to always scan specific projects, even when they aren't open!
 - Retrieves all commits made today by you (using your local or global git config).
 - Determines the specific branch for each commit.
-- Generates a local `daily-report.md` file in your `~/.git-activity-tracker` folder.
+- Generates a local `git-activity-report.md` file in your `~/.git-activity-tracker` folder.
 - Perfect for copying and pasting into your daily standup or timesheet!
 
 ## Extension Settings
